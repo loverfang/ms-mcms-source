@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 角色持久化层XML配置继承IRoleDao -->
+<mapper namespace="net.mingsoft.basic.dao.IRoleDao">
+
+	<!-- 将实体属性与表字段对接开始 -->
+	<resultMap id="resultMap" type="net.mingsoft.basic.bean.RoleBean">
+		<id column="ROLE_ID" property="roleId"/><!-- 将实体的ID属性与表的ID字段对接 -->
+		<result column="ROLE_NAME" property="roleName"/><!-- 将实体的roleName属性与表的roleName字段对接 -->
+		<result column="ROLE_MANAGERID" property="roleManagerId"/><!-- 将实体的roleManagerId属性与表的roleManagerId字段对接 -->
+		<result column="APP_ID" property="appId"/><!-- 将实体的appId属性与表的appId字段对接 -->
+	</resultMap>
+	<!-- 将实体属性与表字段对接结束 -->
+	<sql id="insertColumns">
+		<if test="roleName != null">ROLE_NAME,</if>
+		<if test="roleManagerId != null">ROLE_MANAGERID,</if>
+		<if test="appId !=null">APP_ID</if>
+	</sql>
+	
+	<sql id="insertValues">
+		<if test="roleName != null">#{roleName},</if>
+		<if test="roleManagerId != null">#{roleManagerId},</if>
+		<if test="appId != null">#{appId}</if>
+	</sql>
+	
+	<!-- mysql或sqlServer新增角色开始 -->
+	<insert id="saveEntity" parameterType="net.mingsoft.basic.entity.RoleEntity" useGeneratedKeys="true" keyProperty="roleId" >
+	       insert into role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="insertColumns"></include>
+		</trim>
+		<!-- 注入控制层字段 -->
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<include refid="insertValues"></include>
+		</trim>
+	</insert>
+	<!-- mysql或sqlServer新增角色结束 -->
+	
+	<!-- oracle添加 开始 -->
+	<insert id="saveEntity" useGeneratedKeys="false" parameterType="net.mingsoft.basic.entity.RoleEntity" databaseId="oracle">
+		<selectKey resultType="Integer"  keyProperty="roleId" order="BEFORE">
+			select seq_role_id.nextval as roleId from dual
+		</selectKey>
+		insert into role
+		<!-- 添加表字段 -->
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROLE_ID,
+			<include refid="insertColumns"></include>
+		</trim>
+		<!-- 注入控制层字段 -->
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{roleId},
+			<include refid="insertValues"></include>
+		</trim>
+	</insert>
+	<!-- oracle添加结束 -->
+	
+	<!-- 删除角色开始 -->
+	<delete id="deleteEntity" parameterType="int">
+		delete  r,rm
+		from role r left join role_model rm on r.ROLE_ID=rm.RM_ROLEID left join model m on m.MODEL_ID=rm.RM_MODELID where r.ROLE_ID=#{roleId}
+	</delete>
+	<!-- 删除角色结束 -->
+	
+	<!-- 根据角色ID查询角色开始 -->
+	<select id="getEntity" resultMap="resultMap" parameterType="int">
+		select ROLE_ID,ROLE_NAME,ROLE_MANAGERID,APP_ID from role where ROLE_ID=#{roleId}
+	</select>
+	<!-- 根据角色ID查询角色结束 -->
+	
+	<!-- 更新角色开始 -->
+	<update id="updateEntity" parameterType="net.mingsoft.basic.entity.RoleEntity">
+		update role
+		<set>
+			<if test="roleName != null and roleName !=''">ROLE_NAME=#{roleName},</if>
+			<if test="roleManagerId &gt; 0">ROLE_MANAGERID=#{roleManagerId},</if>
+			<if test="appId &gt; 0">APP_ID=#{appId}</if>
+		</set>
+		where ROLE_ID = #{roleId}
+	</update>
+	<!-- 更新角色结束 -->
+	
+	<!-- 查询所有的角色 -->
+	<select id="queryAll" resultMap="resultMap">
+		select * from role
+	</select>
+	<!-- mysql模糊查询 -->
+	<sql id="queryRolelike" databaseId="mysql">
+	    like  CONCAT('%',#{roleName},'%')
+	</sql>
+	<!-- oracle模糊查询 -->
+	<sql id="queryRolelike" databaseId="oracle">
+	    like '%'||#{roleName}||'%' 
+	</sql>
+	<!-- sqlServer模糊查询 -->
+	<sql id="queryRolelike" databaseId="sqlServer">
+	    like '%'+#{roleName}+'%' 
+	</sql>
+	<!--mysql条件查询-->	
+	<select id="query" resultMap="resultMap">
+		select * from role  
+		<where>
+			<if test="roleName != null and roleName != ''">and ROLE_NAME  <include refid="queryRolelike"></include></if>				
+			<if test="roleManagerId != null and  roleManagerId &gt; 0"> and ROLE_MANAGERID=#{roleManagerId} </if>
+			<if test="appId != null and  appId &gt; 0"> and APP_ID=#{appId} </if>
+		</where>		
+		order by ROLE_ID desc
+	</select>
+
+	<!--批量删除-->
+	<delete id="delete" >
+		delete from role
+		<where>
+			 ROLE_ID  in <foreach collection="ids" item="item" index="index" 
+			open="(" separator="," close=")">#{item}</foreach>
+		</where>
+	</delete>
+	<!--根据实体获取-->
+	<sql id="getRoleWhere">
+		<if test="roleName != null and roleName != ''"> ROLE_NAME=#{roleName} </if>				
+		<if test="roleManagerId &gt; 0"> and ROLE_MANAGERID=#{roleManagerId} </if>				
+	</sql>
+	<!--mysql根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.basic.entity.RoleEntity" databaseId="mysql">
+		select * from role 
+		<where>
+			<include refid="getRoleWhere"></include>
+		</where>
+		limit 0,1
+	</select>
+	<!--oracle根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.basic.entity.RoleEntity" databaseId="oracle">
+		select * from role 
+		<where>
+			<include refid="getRoleWhere"></include>
+			and rownum = 1
+		</where>
+	</select>
+		<!--sqlServer根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.basic.entity.RoleEntity" databaseId="sqlServer">
+		select top(1) * from role 
+		<where>
+			<include refid="getRoleWhere"></include>
+		</where>
+	</select>
+	
+</mapper>

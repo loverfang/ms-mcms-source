@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.mingsoft.mdiy.dao.IPageDao">
+	
+	<resultMap id="resultMap" type="net.mingsoft.mdiy.entity.PageEntity">
+		<id column="page_id" property="pageId" /><!--自增长id -->
+		<result column="page_model_id" property="pageModelId" /><!--模块id -->
+		<result column="page_app_id" property="pageAppId" /><!--应用id -->
+		<result column="page_path" property="pagePath" /><!--自定义页面绑定模板的路径 -->
+		<result column="page_title" property="pageTitle" /><!--自定义页面标题 -->
+		<result column="page_key" property="pageKey" /><!--自定义页面访问路径 -->
+		<result column="page_type" property="pageType" /><!--页面类型 -->
+		<result column="CREATE_DATE" property="createDate" /><!--创建时间 -->
+		<result column="CREATE_BY" property="createBy" /><!--创建者 -->
+		<result column="UPDATE_BY" property="updateBy" /><!--更新者 -->
+		<result column="UPDATE_DATE" property="updateDate" /><!--更新时间 -->
+		<result column="DEL" property="del" /><!--删除标记 -->
+	</resultMap>
+	
+	<sql id="insertCoulmns">
+	    <if test="pageModelId != null">page_model_id,</if>
+		<if test="pageAppId != null">page_app_id,</if>
+		<if test="pagePath != null and pagePath != ''">page_path,</if>
+		<if test="pageTitle != null and pageTitle != ''">page_title,</if>
+		<if test="pageKey != null and pageKey != ''">page_key,</if>
+		<if test="pageType != null and pageType != ''">page_type,</if>
+		<if test="createDate != null">CREATE_DATE,</if>
+		<if test="createBy &gt; 0">CREATE_BY,</if>
+		<if test="updateBy &gt; 0">UPDATE_BY,</if>
+		<if test="updateDate != null">UPDATE_DATE,</if>
+		<if test="del &gt; 0">DEL,</if>
+	</sql>
+	<sql id="insertValues">
+	    <if test="pageModelId != null">#{pageModelId},</if>
+		<if test="pageAppId != null">#{pageAppId},</if>
+		<if test="pagePath != null and pagePath != ''">#{pagePath},</if>
+		<if test="pageTitle != null and pageTitle != ''">#{pageTitle},</if>
+		<if test="pageKey != null and pageKey != ''">#{pageKey},</if>
+		<if test="pageType != null and pageType != ''">#{pageType},</if>
+		<if test="createDate != null">#{createDate},</if>
+		<if test="createBy &gt; 0">#{createBy},</if>
+		<if test="updateBy &gt; 0">#{updateBy},</if>
+		<if test="updateDate != null">#{updateDate},</if>
+		<if test="del &gt; 0">#{del},</if>
+	</sql>
+	<!-- mysql或sqlServer保存-->	
+	<insert id="saveEntity" useGeneratedKeys="true" keyProperty="pageId"
+		parameterType="net.mingsoft.mdiy.entity.PageEntity" >
+		insert into mdiy_page
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="insertCoulmns"></include>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<include refid="insertValues"></include>
+		</trim>
+	</insert>
+	<!-- oracle保存-->
+	<insert id="saveEntity" useGeneratedKeys="false" keyProperty="pageId"
+		parameterType="net.mingsoft.mdiy.entity.PageEntity" databaseId="oracle">
+		<selectKey resultType="Integer"  keyProperty="pageId" order="BEFORE">
+			select seq_page_id.nextval as pageId from dual
+		</selectKey>
+		insert into mdiy_page
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    PAGE_ID,
+			<include refid="insertCoulmns"></include>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    #{pageId},
+			<include refid="insertValues"></include>
+		</trim>
+	</insert>
+	<!--更新-->	
+	<update id="updateEntity" parameterType="net.mingsoft.mdiy.entity.PageEntity">
+		update mdiy_page
+		<set>
+			<if test="pageModelId != null">page_model_id=#{pageModelId},</if>			
+			<if test="pageAppId != null">page_app_id=#{pageAppId},</if>			
+			<if test="pagePath != null and pagePath != ''">page_path=#{pagePath},</if>			
+			<if test="pageTitle != null and pageTitle != ''">page_title=#{pageTitle},</if>			
+			<if test="pageKey != null and pageKey != ''">page_key=#{pageKey},</if>
+			<if test="pageType != null and pageType != ''">page_type=#{pageType},</if>
+			<if test="createDate != null">CREATE_DATE=#{createDate},</if>
+			<if test="createBy &gt; 0">CREATE_BY=#{createBy},</if>
+			<if test="updateBy &gt; 0">UPDATE_BY=#{updateBy},</if>
+			<if test="updateDate != null">UPDATE_DATE=#{updateDate},</if>
+			<if test="del &gt; 0">DEL=#{del},</if>
+		</set>
+		where page_id = #{pageId}
+	</update>
+	
+	<!--根据id获取-->	
+	<select id="getEntity" resultMap="resultMap" parameterType="int">
+		select * from mdiy_page where page_id=#{pageId}
+	</select>
+	
+	<sql id="queryMdiyPageWhere">
+	    <if test="pageModelId != null"> and page_model_id=#{pageModelId} </if>				
+		<if test="pageAppId != null"> and page_app_id=#{pageAppId} </if>				
+		<if test="pagePath != null and pagePath != ''"> and page_path=#{pagePath} </if>				
+		<if test="pageTitle != null and pageTitle != ''"> and page_title=#{pageTitle} </if>				
+		<if test="pageKey != null and pageKey != ''"> and page_key=#{pageKey} </if>
+		<if test="pageType != null and pageType != ''">and page_type=#{pageType}</if>
+		<if test="createDate != null"> and CREATE_DATE=#{createDate} </if>
+		<if test="createBy &gt; 0"> and CREATE_BY=#{createBy} </if>
+		<if test="updateBy &gt; 0"> and UPDATE_BY=#{updateBy} </if>
+		<if test="updateDate != null"> and UPDATE_DATE=#{updateDate} </if>
+		<if test="del &gt; 0"> and DEL=#{del} </if>
+	</sql>
+	<!--mysql根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.mdiy.entity.PageEntity" databaseId="mysql">
+		select * from mdiy_page 
+		<where>
+			<include refid="queryMdiyPageWhere"></include>			
+		</where>
+		limit 0,1
+	</select>
+	<!--oracle根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.mdiy.entity.PageEntity" databaseId="oracle">
+		select * from mdiy_page 
+		<where>
+			<include refid="queryMdiyPageWhere"></include>	
+			and rownum=1		
+		</where>
+	</select>
+	<!--sqlServer根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.mdiy.entity.PageEntity" databaseId="sqlServer">
+		select top(1) * from mdiy_page 
+		<where>
+			<include refid="queryMdiyPageWhere"></include>				
+		</where>
+	</select>	
+	
+	
+	<!--删除-->	
+	<delete id="deleteEntity" parameterType="int">
+		delete from mdiy_page  where page_id=#{pageId} and del != 3
+	</delete>	
+	
+	<!--批量删除-->	
+	<delete id="delete" >
+		delete from mdiy_page
+		<where>
+			 page_id  in <foreach collection="ids" item="item" index="index" 
+			open="(" separator="," close=")">#{item}</foreach>
+		</where>
+		and del != 3
+	</delete>
+	<!--查询全部-->	
+	<select id="queryAll" resultMap="resultMap">
+		select * from mdiy_page order by page_id desc
+	</select>
+	<!--条件查询-->	
+	<select id="query" resultMap="resultMap">
+		select * from mdiy_page  
+		<where>
+				<if test="pageModelId != null"> and page_model_id=#{pageModelId} </if>				
+				<if test="pageAppId != null"> and page_app_id=#{pageAppId} </if>				
+				<if test="pagePath != null and pagePath != ''"> and page_path=#{pagePath} </if>				
+				<if test="pageTitle != null and pageTitle != ''"> and page_title like CONCAT('%',#{pageTitle},'%') </if>
+				<if test="pageKey != null and pageKey != ''"> and page_key=#{pageKey} </if>
+			<if test="pageType != null and pageType != ''">and page_type=#{pageType}</if>
+			<if test="createDate != null"> and CREATE_DATE=#{createDate} </if>
+			<if test="createBy &gt; 0"> and CREATE_BY=#{createBy} </if>
+			<if test="updateBy &gt; 0"> and UPDATE_BY=#{updateBy} </if>
+			<if test="updateDate != null"> and UPDATE_DATE=#{updateDate} </if>
+			<if test="del &gt; 0"> and DEL=#{del} </if>
+		</where>		
+		order by page_id desc
+	</select>
+	
+</mapper>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.mingsoft.base.dao.IBaseDao">
+
+    <!-- mysql根据sql动态查询开始 -->
+    <select id="queryBySQL" resultType="Map" databaseId="mysql">
+        select *
+        from ${table}
+        <where>
+            <foreach item="item" index="key" collection="wheres" open=""
+                     separator="AND" close=""> ${key} = #{item}
+            </foreach>
+        </where>
+        <if test="order !=null">
+            order by ${order} desc
+        </if>
+        <if test="begin != null">
+            limit ${begin}
+            <if test="end !=null ">
+                ,${end}
+            </if>
+        </if>
+    </select>
+    <!-- mysql根据sql动态查询结束 -->
+    <!-- oracle根据sql动态查询开始 -->
+    <select id="queryBySQL" resultType="Map" statementType="STATEMENT" databaseId="oracle">
+        select *
+        from
+        <if test="end !=null and end &gt; 0">
+            ( SELECT b.*, ROWNUM RN FROM ( SELECT * FROM ${table}
+            <if test="order !=null">
+                order by ${order} desc
+            </if>
+            ) b WHERE ROWNUM &lt;= ${end} )
+        </if>
+        <if test="end == null and end &gt; 0">
+            ${table}
+        </if>
+        <where>
+            <foreach item="item" index="key" collection="wheres" open=""
+                     separator="AND" close=""> ${key} = ${item}
+            </foreach>
+        </where>
+        <if test="begin != null and begin &gt; 0">
+            and RN &gt; ${begin}
+        </if>
+    </select>
+    <!-- oracle根据sql动态查询结束 -->
+    <!-- SqlServer根据sql动态查询开始 -->
+    <select id="queryBySQL" resultType="Map" statementType="STATEMENT" databaseId="SqlServer">
+        select *
+        from
+        <if test=" end !=null ">
+            (select *, ROW_NUMBER() OVER(Order by
+            <if test=" orderField == null">
+                basic_id desc ${table}_id
+            </if>
+            <if test=" order != null">
+                order by ${order} desc
+            </if>
+            ) AS RowId from ${table} ) as b
+        </if>
+        <if test=" end == null ">
+            ${table}
+        </if>
+        <where>
+            <foreach item="item" index="key" collection="wheres" open=""
+                     separator="AND" close=""> ${key} = ${item}
+            </foreach>
+        </where>
+        <if test=" begin !=null ">
+            and RowId between #{begin}
+        </if>
+        <if test=" end !=null ">
+            and #{end}
+        </if>
+    </select>
+    <!-- SqlServer根据sql动态查询结束 -->
+
+    <!-- 根据sql动态查询开始 -->
+    <select id="countBySQL" resultType="int" statementType="STATEMENT">
+        select count(*)
+        from ${table}
+        <where>
+            <foreach item="item" index="key" collection="wheres" open=""
+                     separator="AND" close=""> ${key} = ${item}
+            </foreach>
+        </where>
+    </select>
+    <!-- 根据sql动态查询结束 -->
+
+    <!-- mysql或SqlServer根据sql动态更新开始 -->
+    <update id="updateBySQL">
+        update ${table} set
+        <foreach item="field" index="name" collection="fields" open=""
+                 separator="," close="">
+            `${name}`=#{field}
+        </foreach>
+        <where>
+            <foreach item="item" index="key" collection="wheres" open=""
+                     separator="AND" close=""> ${key} = ${item}
+            </foreach>
+        </where>
+    </update>
+    <!-- mysql或SqlServer根据sql动态更新结束 -->
+    <!-- oracle根据sql动态更新开始 -->
+    <update id="updateBySQL" databaseId="oracle">
+        update ${table} set
+        <foreach item="field" index="name" collection="fields" open="begin" close=";end;" separator=";">
+            `${name}`=#{field}
+        </foreach>
+        <where>
+            <foreach item="item" index="key" collection="wheres" open=""
+                     separator="AND" close=""> ${key} = ${item}
+            </foreach>
+        </where>
+    </update>
+    <!-- oracle根据sql动态更新结束 -->
+
+    <!-- 根据sql动态删除开始 -->
+    <update id="deleteBySQL">
+        delete from ${table} where
+        <foreach item="item" index="key" collection="wheres" open=""
+                 separator="AND" close=""> ${key} = #{item}
+        </foreach>
+    </update>
+    <!-- 根据sql动态删除结束 -->
+
+    <!-- 根据sql动态新增开始 -->
+    <insert id="insertBySQL">
+        insert into ${table}
+        <foreach item="field" index="key" collection="fields" open="("
+                 separator="," close=")">`${key}`
+        </foreach>
+        values
+        <foreach item="field" index="key" collection="fields" open="("
+                 separator="," close=")">#{field}
+        </foreach>
+    </insert>
+    <!-- 根据sql动态新增结束 -->
+    <!-- oracle根据sql动态新增开始-->
+    <insert id="insertBySQL" databaseId="oracle">
+        <selectKey resultType="Integer" keyProperty="Id" order="BEFORE">
+            select seq_${table}_id.nextval as Id from dual
+        </selectKey>
+        insert into ${table}
+        (Id,
+        <foreach item="field" index="key" collection="fields" separator=",">
+            "${key}"
+        </foreach>
+        )
+        values(
+        #{Id},
+        <foreach item="field" index="key" collection="fields" separator=",">
+            #{field}
+        </foreach>
+        )
+    </insert>
+    <!-- oracle根据sql动态新增结束-->
+    <!-- 根据sql动态创建表开始 -->
+    <sql id="createTables">
+		 CONSTRAINT fk_${table}_id FOREIGN KEY (basicId) REFERENCES basic (basic_id) ON DELETE CASCADE
+	</sql>
+    <update id="createTable" statementType="STATEMENT" databaseId="mysql">
+        CREATE TABLE ${table} (
+        basicId int(11) NOT NULL,
+        PRIMARY KEY (basicId),
+        <include refid="createTables"></include>
+        ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+    </update>
+    <update id="createTable" statementType="STATEMENT" databaseId="sqlServer">
+        CREATE TABLE ${table} (
+        basicId int NOT NULL,
+        PRIMARY KEY (basicId),
+        <include refid="createTables"></include>
+        )
+    </update>
+    <update id="createTable" statementType="STATEMENT" databaseId="oracle">
+        CREATE TABLE ${table} (
+        basicId NUMBER(10,0) NOT NULL primary key,
+        <include refid="createTables"></include>
+        )
+    </update>
+    <!-- 根据sql动态创建表结束 -->
+    <!-- 根据sql动态更新表开始 -->
+    <sql id="alterTableSql" databaseId="mysql">
+        ALTER TABLE `${table}` change `${fileds.fieldOldName}`
+        `${fileds.fieldName}` ${fileds.fieldType}
+        <if test="fileds.default !=null and fileds.default !=''">default '${fileds.default}'</if>
+    </sql>
+    <sql id="alterTableSql" databaseId="sqlServer">
+        <if test="fileds.default !=null and fileds.default !=''">
+            alter table ${table} add default '${fileds.default}' for ab with values default
+        </if>
+        <if test="fileds.fieldType !=null and fileds.fieldType !=''">
+            alter table ${table} alter column '${fieldOldName}' ${fileds.fieldType}
+        </if>
+        <if test="fileds.fieldName ==null and fileds.fieldName ==''">
+            exec sp_rename '${fileds.fieldOldName}','${fileds.fieldName}','column'
+        </if>
+    </sql>
+    <sql id="alterTableOracleType" databaseId="oracle">
+		EXECUTE immediate 'alter table ${table} modify ("${fileds.fieldOldName}"
+	</sql>
+    <sql id="alterTableSql" databaseId="oracle">
+        BEGIN
+        <if test="fileds.fieldType !=null and fileds.fieldType !=''">
+            <if test="fileds.fieldType =='int(11)'">
+                <include refid="alterTableOracleType"></include>
+                NUMBER(10,0))';
+            </if>
+            <if test="fileds.fieldType =='text'">
+                <include refid="alterTableOracleType"></include>
+                CLOB)';
+            </if>
+            <if test="fileds.fieldType =='datetime'">
+                <include refid="alterTableOracleType"></include>
+                DATE)';
+            </if>
+            <if test="fileds.fieldType =='float(11)'">
+                <include refid="alterTableOracleType"></include>
+                ${fileds.fieldType})';
+            </if>
+            <if test="fileds.fieldType =='varchar(100)'">
+                <include refid="alterTableOracleType"></include>
+                NVARCHAR2(300))';
+            </if>
+        </if>
+        <if test="fileds.default != null and fileds.default != ''">
+            EXECUTE immediate 'alter table ${table} modify "${fileds.fieldOldName}" default "${fileds.default}"';
+        </if>
+        <if test="fileds.fieldName !='' and fileds.fieldOldName != fileds.fieldName">
+            EXECUTE immediate 'alter table ${table} rename column "${fileds.fieldOldName}" to "${fileds.fieldName}"';
+        </if>
+        END;
+    </sql>
+    <sql id="alterTableAddType" databaseId="oracle">
+        <if test="fileds.fieldType =='int(11)'">
+            NUMBER(10,0)
+        </if>
+        <if test="fileds.fieldType =='text'">
+            CLOB
+        </if>
+        <if test="fileds.fieldType =='datetime'">
+            DATE
+        </if>
+        <if test="fileds.fieldType =='float(11)'">
+            ${fileds.fieldType}
+        </if>
+        <if test="fileds.fieldType =='varchar(100)'">
+            ${fileds.fieldType}
+        </if>
+    </sql>
+    <sql id="alterTableAddType">${fileds.fieldType}</sql>
+    <update id="alterTable" statementType="STATEMENT">
+        <choose>
+            <when test="type=='add'">
+                ALTER TABLE `${table}` add `${fileds.fieldName}`
+                <include refid="alterTableAddType"></include>
+                <if test="fileds.default !=null and fileds.default != ''">default '${fileds.default}'</if>
+            </when>
+            <when test="type=='modify'">
+                <include refid="alterTableSql"></include>
+            </when>
+            <when test="type=='drop'">
+                ALTER TABLE `${table}` drop column `${fileds.fieldName}`
+            </when>
+        </choose>
+
+    </update>
+    <!-- 根据sql动态更新表结束 alterTable-->
+
+    <!-- 根据sql动态删除表开始 -->
+    <update id="dropTable" statementType="STATEMENT">
+		DROP TABLE ${table}
+	</update>
+    <!-- 根据sql动态删除表结束 -->
+
+    <!-- 导入sql语句 -->
+    <select id="excuteSql" parameterType="String" statementType="STATEMENT" resultType="java.util.Map">
+		${sql}
+	</select>
+
+    <!--导入sql语句 -->
+    <sql id="sqlWhere">
+        <foreach collection="sqlWhereList" item="item" index="index"
+                 open="and( " separator=" " close=" )">
+            <if test="index gt 0">
+                <choose>
+                 <!--防注入-->
+                    <when test="item.action == 'and' or item.action == 'or'">
+                        ${item.action}
+                    </when>
+                    <otherwise>
+                        and
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="item.el == 'eq'">
+                <choose>
+                    <when test="item.multiple != null and item.multiple = true">
+                        FIND_IN_SET(#{item.value}, `${item.field}`)
+                    </when>
+                    <otherwise>
+                        `${item.field}` = #{item.value}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="item.el == 'gt'">
+                <choose>
+                    <when test="item.type=='time'||item.type=='date'">
+                        <if test="item.type=='time'">
+                            date_format(`${item.field}`,'%T') &gt; date_format(#{item.value},'%T')
+                        </if>
+                        <if test="item.type=='date'">
+                            date_format(`${item.field}`,'%Y-%m-%d %H:%i:%s') &gt; date_format(#{item.value},'%Y-%m-%d %H:%i:%s')
+                        </if>
+                    </when>
+                    <otherwise>
+                        `${item.field}` &gt; #{item.value}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="item.el == 'gte'">
+                `${item.field}` &gt;= #{item.value}
+            </if>
+            <if test="item.el == 'lt'">
+                <choose>
+                    <when test="item.type=='time'||item.type=='date'">
+                        <if test="item.type=='time'">
+                            date_format(`${item.field}`,'%T') &lt; date_format(#{item.value},'%T')
+                        </if>
+                        <if test="item.type=='date'">
+                            date_format(`${item.field}`,'%Y-%m-%d %H:%i:%s') &lt; date_format(#{item.value},'%Y-%m-%d %H:%i:%s')
+                        </if>
+                    </when>
+                    <otherwise>
+                        `${item.field}` &lt; #{item.value}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="item.el == 'lte'">
+                `${item.field}` &lt;= #{item.value}
+            </if>
+            <if test="item.el == 'like'">
+                `${item.field}` like CONCAT('%',#{item.value},'%')
+            </if>
+            <if test="item.el == 'likeLeft'">
+                `${item.field}` like CONCAT(#{item.value},'%')
+            </if>
+            <if test="item.el == 'likeRight'">
+                `${item.field}` like CONCAT('%',#{item.value})
+            </if>
+            <if test="item.el == 'in'">
+                `${item.field}` in (${item.value})
+            </if>
+            <if test="item.el == 'range'">
+               <if test="item.type=='time'">
+                   date_format(`${item.field}`,'%T') BETWEEN date_format(#{item.value[0]},'%T') AND date_format(#{item.value[1]},'%T')
+               </if>
+               <if test="item.type=='date'">
+                   date_format(`${item.field}`,'%Y-%m-%d %H:%i:%s') BETWEEN date_format(#{item.value[0]},'%Y-%m-%d %H:%i:%s') AND date_format(#{item.value[1]},'%Y-%m-%d %H:%i:%s')
+               </if>
+            </if>
+        </foreach>
+    </sql>
+
+
+</mapper>

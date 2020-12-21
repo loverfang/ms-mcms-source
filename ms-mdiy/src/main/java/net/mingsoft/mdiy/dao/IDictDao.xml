@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.mingsoft.mdiy.dao.IDictDao">
+	
+	<resultMap id="resultMap" type="net.mingsoft.mdiy.entity.DictEntity">
+		<id column="dict_id" property="dictId" /><!--编号 -->
+		<result column="app_id" property="appId" /><!--应用编号 -->
+		<result column="dict_value" property="dictValue" /><!--数据值 -->
+		<result column="dict_label" property="dictLabel" /><!--标签名 -->
+		<result column="dict_type" property="dictType" /><!--类型 -->
+		<result column="dict_description" property="dictDescription" /><!--描述 -->
+		<result column="is_child" property="isChild" /><!--是否为子业务-->
+		<result column="dict_sort" property="dictSort" /><!--排序（升序） -->
+		<result column="dict_parent_id" property="dictParentId" /><!--父级编号 -->
+		<result column="create_by" property="createBy" /><!--创建者 -->
+		<result column="create_date" property="createDate" /><!--创建时间 -->
+		<result column="update_by" property="updateBy" /><!--更新者 -->
+		<result column="update_date" property="updateDate" /><!--更新时间 -->
+		<result column="dict_remarks" property="dictRemarks" /><!--备注信息 -->
+		<result column="del" property="del" /><!--删除标记 -->
+	</resultMap>
+	<sql id="insertColumns">
+	    <if test="appId != null">app_id,</if>
+		<if test="dictValue != null and dictValue != ''">dict_value,</if>
+		<if test="dictLabel != null and dictLabel != ''">dict_label,</if>
+		<if test="dictType != null and dictType != ''">dict_type,</if>
+		<if test="dictDescription != null and dictDescription != ''">dict_description,</if>
+		<if test="dictSort != null">dict_sort,</if>
+		<if test="dictParentId != null and dictParentId != ''">dict_parent_id,</if>
+		<if test="isChild != null and isChild != ''">is_child,</if>
+		<if test="createBy != null">create_by,</if>
+		<if test="createDate != null">create_date,</if>
+		<if test="dictRemarks != null and dictRemarks != ''">dict_remarks,</if>
+		<if test="del &gt; 0">del,</if>
+	</sql>
+	<sql id="insertValues">
+	    <if test="appId != null">#{appId},</if>
+		<if test="dictValue != null and dictValue != ''">#{dictValue},</if>
+		<if test="dictLabel != null and dictLabel != ''">#{dictLabel},</if>
+		<if test="dictType != null and dictType != ''">#{dictType},</if>
+		<if test="dictDescription != null and dictDescription != ''">#{dictDescription},</if>
+		<if test="dictSort != null">#{dictSort},</if>
+		<if test="dictParentId != null and dictParentId != ''">#{dictParentId},</if>
+		<if test="isChild != null and isChild != ''">#{isChild},</if>
+		<if test="createBy != null">#{createBy},</if>
+		<if test="createDate != null">#{createDate},</if>
+		<if test="dictRemarks != null and dictRemarks != ''">#{dictRemarks},</if>
+		<if test="del &gt; 0">#{del},</if>    
+	</sql>
+	
+	<!-- mysql或sqlServer保存-->	
+	<insert id="saveEntity" useGeneratedKeys="true" keyProperty="dictId"
+		parameterType="net.mingsoft.mdiy.entity.DictEntity" >
+		insert into mdiy_dict
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="insertColumns"></include>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<include refid="insertValues"></include>
+		</trim>
+	</insert>
+		<!--oracle保存-->	
+	<insert id="saveEntity" useGeneratedKeys="false" keyProperty="dictId"
+		parameterType="net.mingsoft.mdiy.entity.DictEntity" databaseId="oracle">
+		<selectKey resultType="Integer"  keyProperty="dictId" order="BEFORE">
+			select seq_dict_id.nextval as dictId from dual
+		</selectKey>
+		insert into mdiy_dict
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		    DICT_ID,
+			<include refid="insertColumns"></include>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    #{dictId},
+			<include refid="insertValues"></include>
+		</trim>
+	</insert>
+	
+	<!--更新-->	
+	<update id="updateEntity" parameterType="net.mingsoft.mdiy.entity.DictEntity">
+		update mdiy_dict
+		<set>
+			<if test="dictValue != null and dictValue != ''">dict_value=#{dictValue},</if>			
+			<if test="dictLabel != null and dictLabel != ''">dict_label=#{dictLabel},</if>			
+			<if test="dictType != null and dictType != ''">dict_type=#{dictType},</if>			
+			<if test="dictDescription != null and dictDescription != ''">dict_description=#{dictDescription},</if>			
+			<if test="dictSort != null">dict_sort=#{dictSort},</if>			
+			<if test="dictParentId != null and dictParentId != ''">dict_parent_id=#{dictParentId},</if>			
+			<if test="isChild != null and isChild != ''">is_child=#{isChild},</if>
+			<if test="updateBy != null">update_by=#{updateBy},</if>			
+			<if test="updateDate != null">update_date=#{updateDate},</if>			
+			<if test="dictRemarks != null and dictRemarks != ''">dict_remarks=#{dictRemarks},</if>			
+			<if test="del &gt; 0">del=#{del},</if>			
+		</set>
+		where dict_id = #{dictId}
+	</update>
+	
+	<!--根据id获取-->	
+	<select id="getEntity" resultMap="resultMap" parameterType="int">
+		select * from mdiy_dict where dict_id=#{dictId}
+	</select>
+	
+	<sql id="queryMdiyDictWhere">
+	    <if test="appId != null"> and app_id=#{appId} </if>				
+		<if test="dictValue != null and dictValue != ''"> and dict_value=#{dictValue} </if>				
+		<if test="dictLabel != null and dictLabel != ''"> and dict_label=#{dictLabel} </if>				
+		<if test="dictType != null and dictType != ''"> and dict_type=#{dictType} </if>				
+		<if test="dictDescription != null and dictDescription != ''"> and dict_description=#{dictDescription} </if>				
+		<if test="dictSort != null"> and dict_sort=#{dictSort} </if>				
+		<if test="dictParentId != null and dictParentId != ''"> and dict_parent_id=#{dictParentId} </if>				
+		<if test="isChild != null and isChild != ''"> and is_child=#{isChild} </if>
+		<if test="dictRemarks != null and dictRemarks != ''"> and dict_remarks=#{dictRemarks} </if>				
+		<if test="del &gt; 0"> and del=#{del} </if>
+	</sql>
+	<!--mysql根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.mdiy.entity.DictEntity" databaseId="mysql">
+		select * from mdiy_dict 
+		<where>
+			<include refid="queryMdiyDictWhere"></include>			
+		</where>
+		limit 0,1
+	</select>	
+	<!--oracle根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.mdiy.entity.DictEntity" databaseId="oracle">
+		select * from mdiy_dict 
+		<where>
+			<include refid="queryMdiyDictWhere"></include>
+			and rownum=1				
+		</where>
+	</select>	
+	<!--sqlServer根据实体获取-->
+	<select id="getByEntity" resultMap="resultMap" parameterType="net.mingsoft.mdiy.entity.DictEntity" databaseId="sqlServer">
+		select top(1) * from mdiy_dict 
+		<where>
+			<include refid="queryMdiyDictWhere"></include>				
+		</where>
+	</select>	
+	
+	
+	<!--删除-->	
+	<delete id="deleteEntity" parameterType="int">
+		delete from mdiy_dict  where dict_id=#{dictId} and del != 3
+	</delete>	
+	
+	<!--批量删除-->	
+	<delete id="delete" >
+		delete from mdiy_dict
+		<where>
+			 dict_id  in <foreach collection="ids" item="item" index="index" 
+			open="(" separator="," close=")">#{item}</foreach>
+			 and del != 3
+		</where>
+	</delete>
+	<!--查询全部-->	
+	<select id="queryAll" resultMap="resultMap">
+		select * from mdiy_dict order by dict_sort,dict_type
+	</select>
+	<!--条件查询-->	
+	<select id="query" resultMap="resultMap">
+		select * from mdiy_dict
+		<where>
+				app_id = #{appId}
+				<if test="dictValue != null and dictValue != ''"> and dict_value=#{dictValue} </if>				
+				<if test="dictLabel != null and dictLabel != ''"> and dict_label like concat('%',#{dictLabel},'%') </if>
+				<if test="dictType != null and dictType != ''"> and dict_type=#{dictType} </if>				
+				<if test="dictDescription != null and dictDescription != ''"> and dict_description=#{dictDescription} </if>				
+				<if test="dictSort != null"> and dict_sort=#{dictSort} </if>				
+				<if test="dictParentId != null and dictParentId != ''"> and dict_parent_id=#{dictParentId} </if>				
+				<if test="isChild != null and isChild != ''"> and is_child=#{isChild} </if>
+				<if test="dictRemarks != null and dictRemarks != ''"> and dict_remarks=#{dictRemarks} </if>				
+				<if test="del &gt; 0"> and del=#{del} </if>
+			<include refid="net.mingsoft.base.dao.IBaseDao.sqlWhere"></include>
+		</where>	
+		<if test="orderBy != null">
+			order by
+			<choose>
+				<when test='orderBy=="dictId"'>dict_id</when>
+				<when test='orderBy=="dictType"'>dict_type</when>
+				<when test='orderBy=="dictSort"'>dict_sort</when>
+				<otherwise>
+					${orderBy}
+				</otherwise>
+			</choose>
+		</if>
+		<if test="orderBy==null">
+			order by dict_type,dict_sort desc,dict_id
+		</if>	
+	</select>
+
+<!--    根据“子业务类型”（条件）获取所有字典类型-->
+    <select id="dictType" resultMap="resultMap">
+    select * from mdiy_dict
+
+    <where>
+        app_id = #{appId}
+        <if test="isChild != null and isChild != ''"> and is_child=#{isChild} </if>
+    </where>
+    GROUP BY dict_type
+    </select>
+
+	
+</mapper>

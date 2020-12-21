@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=db-mcms
+    username: root
+    password: root
+    filters: wall,mergeStat
+    type: com.alibaba.druid.pool.DruidDataSource
