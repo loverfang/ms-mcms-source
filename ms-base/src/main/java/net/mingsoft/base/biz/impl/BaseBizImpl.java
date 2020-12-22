@@ -41,9 +41,16 @@ import java.util.Map;
  */
 public abstract class BaseBizImpl<E extends Serializable> implements IBaseBiz {
 
+	protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
+
 	private IBaseDao<E> baseDao;
 
-	protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
+	/**
+	 * 不需要重写此方法，自动会
+	 *
+	 * @return
+	 */
+	protected abstract IBaseDao<E> getDao();
 
 	@Override
 	public int saveEntity(BaseEntity entity) {
@@ -58,7 +65,6 @@ public abstract class BaseBizImpl<E extends Serializable> implements IBaseBiz {
 
 	@Override
 	public void updateEntity(BaseEntity entity) {
-
 		// TODO Auto-generated method stub
 		getDao().updateEntity(entity);
 	}
@@ -68,8 +74,6 @@ public abstract class BaseBizImpl<E extends Serializable> implements IBaseBiz {
 		// TODO Auto-generated method stub
 		return getDao().queryAll();
 	}
-
-
 
 	@Override
 	@Deprecated
@@ -136,13 +140,6 @@ public abstract class BaseBizImpl<E extends Serializable> implements IBaseBiz {
 		// TODO Auto-generated method stub
 		return getDao().excuteSql(sql);
 	}
-
-	/**
-	 * 不需要重写此方法，自动会
-	 *
-	 * @return
-	 */
-	protected abstract IBaseDao<E> getDao();
 
 	@Override
 	public void saveBatch(List list) {

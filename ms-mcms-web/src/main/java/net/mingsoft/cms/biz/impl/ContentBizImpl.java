@@ -67,4 +67,5 @@ public class ContentBizImpl extends BaseBizImpl implements IContentBiz {
 		}
 		return contentDao.getSearchCount(null,null,whereMap, appId,categoryIds);
 	}
+
 }
