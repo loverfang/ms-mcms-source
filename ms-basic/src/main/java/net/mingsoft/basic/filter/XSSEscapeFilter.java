@@ -48,7 +48,8 @@ public class XSSEscapeFilter implements Filter {
 
 	private static Logger logger = LoggerFactory.getLogger(XSSEscapeFilter.class);
 
-	private static boolean IS_INCLUDE_RICH_TEXT = false;// 是否过滤富文本内容
+	// 是否过滤富文本内容
+	private static boolean IS_INCLUDE_RICH_TEXT = false;
 
 	public List<String> includes = new ArrayList<String>();
 

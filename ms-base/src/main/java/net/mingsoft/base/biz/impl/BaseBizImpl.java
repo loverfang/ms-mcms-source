@@ -43,8 +43,6 @@ public abstract class BaseBizImpl<E extends Serializable> implements IBaseBiz {
 
 	protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	private IBaseDao<E> baseDao;
-
 	/**
 	 * 不需要重写此方法，自动会
 	 *

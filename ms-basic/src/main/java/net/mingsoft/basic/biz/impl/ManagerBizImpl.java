@@ -81,6 +81,16 @@ public class ManagerBizImpl extends BaseBizImpl implements IManagerBiz {
 	 * 获取管理员持久化层
 	 * @return managerDao 返回管理员持久化层
 	 */
+	@Override
+	public IBaseDao getDao() {
+		// TODO Auto-generated method stub
+		return managerDao;
+	}
+
+    /**
+	 * 获取管理员持久化层
+	 * @return managerDao 返回管理员持久化层
+	 */
     public IManagerDao getManagerDao() {
         return managerDao;
     }
@@ -93,16 +103,6 @@ public class ManagerBizImpl extends BaseBizImpl implements IManagerBiz {
     public void setManagerDao(IManagerDao managerDao) {
     	// TODO Auto-generated method stub
        this.managerDao = managerDao;
-    }
-
-	/**
-	 * 获取管理员持久化层
-	 * @return managerDao 返回管理员持久化层
-	 */
-    @Override
-    public IBaseDao getDao() {
-    	// TODO Auto-generated method stub
-       return managerDao;
     }
 
 	@Override

@@ -32,7 +32,9 @@ import javax.servlet.annotation.WebListener;
  */
 @WebListener
 public class WebRootListener implements ServletContextListener {
+
     private static String webRootPath;
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         webRootPath=servletContextEvent.getServletContext().getRealPath("/");
