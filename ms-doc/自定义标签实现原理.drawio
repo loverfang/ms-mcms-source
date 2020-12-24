@@ -1,17 +1,74 @@
-<mxfile host="app.diagrams.net" modified="2020-12-24T06:15:12.475Z" agent="5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="9OOfVfyTViDV1XLsW5vX" version="14.1.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-24T08:40:33.779Z" agent="5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="QIL8EtFLNVm4MVQdn3YJ" version="14.1.2" type="github">
   <diagram id="BFApHqj2zQGc14RBueJt" name="Page-1">
-    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="bmER2QPOODZpMXa38-fE-2" value="用&lt;br&gt;StringTemplateLoader" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="100" y="550" width="150" height="80" as="geometry" />
+          <mxGeometry x="110" y="930" width="150" height="80" as="geometry" />
         </mxCell>
         <mxCell id="bmER2QPOODZpMXa38-fE-6" value="用自定义的标签编写模板页面" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="90" y="390" width="200" height="70" as="geometry" />
+          <mxGeometry x="100" y="760" width="200" height="70" as="geometry" />
         </mxCell>
         <mxCell id="bmER2QPOODZpMXa38-fE-7" value="用实现了TemplateDirectiveModel接口的类设计出之定义标签" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="80" y="80" width="190" height="70" as="geometry" />
+          <mxGeometry x="90" y="660" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-8" value="需要展示的数据" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-9" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="314" y="20" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-10" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="550" y="900" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-11" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="550" y="800" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-12" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="370" y="865" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-13" value="HTML元素" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="324" y="30" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-14" value="freemarker自带标签" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="420" y="30" width="84" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-15" value="自定义发Freemarker标签" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="324" y="70" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-16" value="展示出来的静态页面" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="900" y="36" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-23" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="212" y="41" width="60" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-19" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="bmER2QPOODZpMXa38-fE-23">
+          <mxGeometry y="20" width="60" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-20" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="bmER2QPOODZpMXa38-fE-23">
+          <mxGeometry x="25" width="10" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-25" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="570" y="50" width="290" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-26" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="570" y="70" width="290" height="9" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-27" value="模板文件定义" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="351" y="130" width="126" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-30" value="后台动组装数据" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="130" width="126" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-31" value="调用template.process(data, writer)方法将模板和数据进行合并形成html,这时候遇到自定义标签时才会去执行自定义标签中的execute方法进行展示！" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="570" y="91" width="300" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bmER2QPOODZpMXa38-fE-32" value="" style="endArrow=none;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="20" y="200" as="sourcePoint" />
+            <mxPoint x="1080" y="200" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
