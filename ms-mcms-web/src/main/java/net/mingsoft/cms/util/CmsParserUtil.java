@@ -108,6 +108,7 @@ public class CmsParserUtil extends ParserUtil {
 			parserParams.put(ParserUtil.PAGE, page);
 			AttributeBean attributeBean = new AttributeBean();
 			ParserUtil.read(File.separator + column.getCategoryListUrl(),parserParams, page,attributeBean);
+
 			int totalPageSize = PageUtil.totalPage(articleIdTotal, page.getSize());
 			page.setTotal(totalPageSize);
 			//文章列表页没有写文章列表标签，总数为0

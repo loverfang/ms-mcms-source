@@ -54,6 +54,7 @@ public abstract class  BaseEntity implements Serializable{
 	 * 创建用户编号
 	 */
 	protected int createBy;
+
 	/**
 	 * 创建日期
 	 */
