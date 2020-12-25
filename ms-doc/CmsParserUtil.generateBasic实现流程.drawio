@@ -1,1 +1,61 @@
-<mxfile host="app.diagrams.net" modified="2020-12-25T16:07:38.620Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" version="14.1.1" etag="OmBKjw0ShsAVcNmKFxeQ" type="github"><diagram id="HN3Gwaf-FKJD2HsYoSs_">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-12-25T17:10:59.443Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="Qohtmld6XXlxAM9RToXJ" version="14.1.1" type="github">
+  <diagram id="HN3Gwaf-FKJD2HsYoSs_" name="Page-1">
+    <mxGraphModel dx="870" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-1" value="开始" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="250" y="10" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="160" width="510" height="830" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-3" value="传入栏目信息" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="900" y="100" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-4" value="循环栏目列表" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-5" value="new一个分页对象出来，获得文章编号，文章的栏目路经。" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="200" y="200" width="170" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-6" value="用“column”作为key来存储文章对象。" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="190" y="320" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-7" value="&lt;span&gt;用“tableName”字符串&lt;br&gt;作为key来存储自定义模型对象。&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="190" y="460" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-8" value="&lt;span&gt;用“id”字符串&lt;br&gt;作为key来存储文章Id。&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="190" y="590" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-9" value="设置page的上一篇下一篇所指id。" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="190" y="710" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-11" value="调用content = CmsParserUtil.generate(columnUrl, cloneMap);方法生成静态页面" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="185" y="840" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-12" value="结束" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;dashed=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="245" y="1050" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-13" value="开始" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="820" y="10" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-15" value="设置一些无关痛痒的东西" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="770" y="160" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-16" value="设置自定义表单信息" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="770" y="240" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-17" value="调用:&lt;br&gt;&amp;nbsp;ParserUtil.read(File.separator + column.getCategoryListUrl(),parserParams, page,attributeBean);" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="600" y="335" width="530" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-18" value="设置列表中的分页信息" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="770" y="430" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V9bf-2Bh5WTj0-9IYK_N-19" value="调用ParserUtil.read()方法生成页面" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="770" y="530" width="180" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
