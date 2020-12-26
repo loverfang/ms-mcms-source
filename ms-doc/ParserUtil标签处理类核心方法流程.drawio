@@ -1,1 +1,166 @@
-<mxfile host="app.diagrams.net" modified="2020-12-25T23:05:27.841Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" version="14.1.1" etag="Lxrj2DqNMHjj1qcvzUKy" type="github"><diagram id="RzY2OMNMM-7YFux_urH8">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-12-26T15:32:29.109Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="vC5cadfP8bUh4bHfi9GU" version="14.1.1" type="github">
+  <diagram id="RzY2OMNMM-7YFux_urH8" name="Page-1">
+    <mxGraphModel dx="2070" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-1" value="传入参数:&lt;br&gt;　　模板路经&lt;br&gt;　　数据&lt;br&gt;　　page对象&lt;br&gt;　　标签属性对象" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="320" y="60" width="190" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-2" value="标签处理Read方法:ParserUtil.read" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="40" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-4" value="" style="endArrow=classic;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="pEFI1ha4uzIQoMVtyjVg-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="50" as="sourcePoint" />
+            <mxPoint x="290" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-5" value="设置Freemarker的Configuration信息&lt;br&gt;１、设置数据格式处理&lt;br&gt;２、设置模板加载为综合加载器" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="165" y="180" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-6" value="读取模板文件，转换成字符串" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="165" y="270" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-7" value="对模板字符串进行处理:&lt;br&gt;１、将原来＃include标签替换成自定义标签&amp;lt;@ms_includeEx 的形式&lt;br&gt;２、&lt;span&gt;将模型中{ms:xx:xx}标签替换成${开头的标签　&lt;/span&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 如:原来是{ms:global.host/}替换后变成:${global.host}&lt;/div&gt;&lt;div&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;原来是{ms:articlelist/}替换后变成:${articlelist}&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#CC0000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="420" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-8" value="调用stringLoader.putTempleate()方法，将替换标签后的字符串转换成模板引擎能使用的模板" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="165" y="480" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-9" value="放入ms_includeEx自定义标签" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="165" y="570" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-10" value="" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-40" y="670" width="660" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-12" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-5" target="pEFI1ha4uzIQoMVtyjVg-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="320" as="sourcePoint" />
+            <mxPoint x="470" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-13" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-6" target="pEFI1ha4uzIQoMVtyjVg-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="400" as="sourcePoint" />
+            <mxPoint x="340" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-14" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-7" target="pEFI1ha4uzIQoMVtyjVg-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="590" as="sourcePoint" />
+            <mxPoint x="470" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-15" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-8" target="pEFI1ha4uzIQoMVtyjVg-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="700" as="sourcePoint" />
+            <mxPoint x="470" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-16" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-9" target="pEFI1ha4uzIQoMVtyjVg-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="700" as="sourcePoint" />
+            <mxPoint x="470" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-18" value="&lt;span&gt;获得数据库中所有自定义标签列表，并遍历它，遍历过程如下:&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#CC0000;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="670" width="340" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-19" target="pEFI1ha4uzIQoMVtyjVg-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-19" value="是否是list标签" style="rhombus;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="230" y="760" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-20" value="&lt;span style=&quot;text-align: left&quot;&gt;new一个自定义List标签对象将其放入Freemarker的共享变量中&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="770" width="205" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-21" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-19" target="pEFI1ha4uzIQoMVtyjVg-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="850" as="sourcePoint" />
+            <mxPoint x="390" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-25" value="是否是page标签" style="rhombus;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="230" y="880" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-26" value="&lt;span style=&quot;text-align: left&quot;&gt;new一个自定义Page标签对象将其放入Freemarker的共享变量中,&lt;br&gt;需要传入page和页面标签参数对象&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="890" width="205" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-28" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-25" target="pEFI1ha4uzIQoMVtyjVg-26">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="970" as="sourcePoint" />
+            <mxPoint x="390" y="920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-29" value="是" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="890" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-30" value="是" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="770" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-38" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-25" target="pEFI1ha4uzIQoMVtyjVg-40">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1200" as="sourcePoint" />
+            <mxPoint x="350" y="1150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-41" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="-30" y="1000" width="640" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-40" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;" vertex="1" parent="pEFI1ha4uzIQoMVtyjVg-41">
+          <mxGeometry width="640" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-34" value="是否是Single&lt;br&gt;&amp;amp;&amp;amp;&lt;br&gt;不是：&quot;field&quot;,&quot;pre&quot;,&quot;page&quot;,&quot;next&quot;" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;" vertex="1" parent="pEFI1ha4uzIQoMVtyjVg-41">
+          <mxGeometry x="10" y="10" width="220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-35" value="传入参数有&quot;id&quot;&lt;br&gt;&amp;amp;&amp;amp;&lt;br&gt;标签是：&quot;field&quot;" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;" vertex="1" parent="pEFI1ha4uzIQoMVtyjVg-41">
+          <mxGeometry x="237.5" y="25" width="165" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-36" value="传入参数有&quot;pageTag&quot;&lt;br&gt;&amp;amp;&amp;amp;&lt;br&gt;标签名：&quot;pre&quot;,&quot;next&quot;,&quot;page&quot;" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;" vertex="1" parent="pEFI1ha4uzIQoMVtyjVg-41">
+          <mxGeometry x="420" y="15" width="205" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-42" value="调用rendering()方法获得查询内容的sql语句" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="160" y="1220" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-43" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-40" target="pEFI1ha4uzIQoMVtyjVg-42">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1180" as="sourcePoint" />
+            <mxPoint x="350" y="1130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-44" value="三个条件满足任何一个都进入下一步" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="290" y="1180" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-45" value="调用map.put(x.getTagName(), list1.get(0));将查询到的内容与标签名称对应起来放入模板中" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="160" y="1330" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-46" value="" style="endArrow=classic;html=1;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-42" target="pEFI1ha4uzIQoMVtyjVg-45">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="1330" as="sourcePoint" />
+            <mxPoint x="340" y="1280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-47" value="结束" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#000000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="265" y="1580" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-48" value="调用template.process(map, writer);执行合并，返回也最终字符串" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="97.5" y="1460" width="385" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-49" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-45" target="pEFI1ha4uzIQoMVtyjVg-48">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1380" as="sourcePoint" />
+            <mxPoint x="350" y="1330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pEFI1ha4uzIQoMVtyjVg-50" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="pEFI1ha4uzIQoMVtyjVg-48" target="pEFI1ha4uzIQoMVtyjVg-47">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="1380" as="sourcePoint" />
+            <mxPoint x="350" y="1330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
