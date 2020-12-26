@@ -1,1 +1,16 @@
-<mxfile host="app.diagrams.net" modified="2020-12-25T17:12:45.105Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" version="14.1.1" etag="5eYc1WJHVYamSC1RGtvc" type="github"><diagram id="ZeCDD-SrfZUdTL9hA_TX">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-12-26T16:17:35.295Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="d0T3pPkP3NoSDZSATmgg" version="14.1.1" type="github">
+  <diagram id="ZeCDD-SrfZUdTL9hA_TX" name="Page-1">
+    <mxGraphModel dx="870" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DAang3bvfwFcJRfCvMwH-1" value="计算总条数:&lt;br&gt;int totalPageSize = PageUtil.totalPage(articleIdTotal, page.getSize());" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="50" width="500" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DAang3bvfwFcJRfCvMwH-2" value="用page对象设置总页数" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="315" y="150" width="190" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
