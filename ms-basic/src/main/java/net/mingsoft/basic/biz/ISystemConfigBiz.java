@@ -1,27 +1,19 @@
 package net.mingsoft.basic.biz;
 
+import net.mingsoft.base.biz.IBaseBiz;
 import net.mingsoft.basic.entity.SystemConfigEntity;
 
-public interface ISystemConfigBiz {
-    /**
-     * 保存配置信息
-     */
-    void saveConfig(SystemConfigEntity config);
+import java.util.List;
+import java.util.Map;
 
-    /**
-     * 更新配置信息
-     */
-    void update(SystemConfigEntity config);
+public interface ISystemConfigBiz extends IBaseBiz {
+
+    List<SystemConfigEntity> queryList(Map<String, Object> params);
 
     /**
      * 根据key，更新value
      */
     void updateValueByKey(String key, String value);
-
-    /**
-     * 删除配置信息
-     */
-    void deleteBatch(Long[] ids);
 
     /**
      * 根据key，获取配置的value值

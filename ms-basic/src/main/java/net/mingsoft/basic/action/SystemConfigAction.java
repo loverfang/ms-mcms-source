@@ -1,63 +1,72 @@
 package net.mingsoft.basic.action;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import net.mingsoft.base.entity.ResultData;
+import net.mingsoft.basic.bean.EUListBean;
+import net.mingsoft.basic.biz.ISystemConfigBiz;
+import net.mingsoft.basic.entity.SystemConfigEntity;
+import net.mingsoft.basic.util.BasicUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
+@Api(value = "系统配置管理接口")
+@Controller
+@RequestMapping("/${ms.manager.path}/config/")
 public class SystemConfigAction extends BaseAction{
-    /**
-     * 所有配置列表
-     */
+
+    @Autowired
+    private ISystemConfigBiz systemConfigBiz;
+
+    @ApiOperation(value = "查询配置信息列表")
     @GetMapping("/list")
-    @RequiresPermissions("sys:config:list")
-    public ResultResponse list(@RequestParam Map<String, Object> params) {
-        PageUtils page = sysConfigService.queryPage(params);
-        return ResultResponse.ok().put("page", page);
+    @RequiresPermissions("manage:config:list")
+    public ResultData list(@RequestParam Map<String, Object> params) {
+        // 开启分页
+        BasicUtil.startPage();
+        // 查询数据
+        List<SystemConfigEntity> systemConfigEntityList = systemConfigBiz.queryList(params);
+        // 封装展示数据
+        return ResultData.build().success(new EUListBean(systemConfigEntityList,(int)BasicUtil.endPage(systemConfigEntityList).getTotal()));
     }
 
-    /**
-     * 配置信息
-     */
+    @ApiOperation(value = "查询配置信息")
     @GetMapping("/info/{id}")
-    @RequiresPermissions("sys:config:info")
-    public ResultResponse info(@PathVariable("id") Long id) {
-        SysConfigEntity config = sysConfigService.getById(id);
-        return ResultResponse.ok().put("config", config);
+    @RequiresPermissions("manage:config:info")
+    public ResultData info(@PathVariable("id") Integer id) {
+        SystemConfigEntity systemConfigEntity = (SystemConfigEntity)systemConfigBiz.getEntity(id);
+        return ResultData.build().success(systemConfigEntity);
     }
 
-    /**
-     * 保存配置
-     */
-    @SysLog("保存配置")
+    @ApiOperation(value = "保存配置")
     @PostMapping("/save")
-    @RequiresPermissions("sys:config:save")
-    public ResultResponse save(@RequestBody SysConfigEntity config) {
-        ValidatorUtils.validateEntity(config);
-        sysConfigService.saveConfig(config);
-        return ResultResponse.ok();
+    @RequiresPermissions("manage:config:save")
+    public ResultData save(@RequestBody SystemConfigEntity systemConfigEntity) {
+        systemConfigBiz.saveEntity(systemConfigEntity);
+        return ResultData.build().success(systemConfigEntity);
     }
 
-    /**
-     * 修改配置
-     */
-    @SysLog("修改配置")
+    @ApiOperation(value = "修改配置")
     @PostMapping("/update")
-    @RequiresPermissions("sys:config:update")
-    public ResultResponse update(@RequestBody SysConfigEntity config) {
-        ValidatorUtils.validateEntity(config);
-        sysConfigService.update(config);
-        return ResultResponse.ok();
+    @RequiresPermissions("manage:config:update")
+    public ResultData update(@RequestBody SystemConfigEntity systemConfigEntity) {
+        //验证方法值得借鉴
+        //ValidatorUtils.validateEntity(config);
+        systemConfigBiz.updateEntity( systemConfigEntity );
+        return ResultData.build().success(systemConfigEntity);
     }
 
-    /**
-     * 删除配置
-     */
-    @SysLog("删除配置")
+    @ApiOperation(value = "删除配置")
     @PostMapping("/delete")
-    @RequiresPermissions("sys:config:delete")
-    public ResultResponse delete(@RequestBody Long[] ids) {
-        sysConfigService.deleteBatch(ids);
-        return ResultResponse.ok();
+    @RequiresPermissions("manage:config:delete")
+    public ResultData delete(@RequestBody int[] ids) {
+        systemConfigBiz.delete(ids);
+        return ResultData.build().success();
     }
+
 }

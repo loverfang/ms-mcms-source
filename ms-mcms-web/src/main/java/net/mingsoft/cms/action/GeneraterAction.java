@@ -169,19 +169,23 @@ public class GeneraterAction extends BaseAction {
             categoryEntity.setAppId(app.getAppId());
 			columns = categoryBiz.query(categoryEntity);
 		}
+
 		List<CategoryBean> articleIdList = null;
 			// 1、设置模板文件夹路径
 			// 获取栏目列表模版
 			for (CategoryEntity column : columns) {
+
+				// 判断模板文件是否存在
+				if (!FileUtil.exist(ParserUtil.buildTempletPath(column.getCategoryListUrl()))) {
+					LOG.error("模板不存在：{}", column.getCategoryUrl());
+					continue;
+				}
+
 				ContentBean contentBean = new ContentBean();
 				contentBean.setContentCategoryId(column.getId());
+
 				// 分类是列表
 				if(column.getCategoryType().equals("1")) {
-					// 判断模板文件是否存在
-					if (!FileUtil.exist(ParserUtil.buildTempletPath(column.getCategoryListUrl()))) {
-						LOG.error("模板不存在：{}", column.getCategoryUrl());
-						continue;
-					}
 					//获取模板中列表标签中的条件
 					Map<String, Object> map = new HashMap<>();
 					map.put(ParserUtil.APP_ID, BasicUtil.getAppId());
@@ -189,14 +193,17 @@ public class GeneraterAction extends BaseAction {
 					map.put(ParserUtil.HTML, ParserUtil.HTML);
 					map.put(ParserUtil.URL, BasicUtil.getUrl());
 					map.put(ParserUtil.PAGE, page);
+
 					AttributeBean attributeBean = new AttributeBean();
 					// 获取文章列表模板标签属性
 					ParserUtil.read(column.getCategoryListUrl(), map, page, attributeBean);
+
 					contentBean.setFlag(attributeBean.getFlag());
 					contentBean.setNoflag(attributeBean.getNoflag());
 					contentBean.setOrder(attributeBean.getOrder());
 					contentBean.setOrderBy(attributeBean.getOrderby());
 				}
+
 				articleIdList = contentBiz.queryIdsByCategoryIdForParser(contentBean);
 				// 判断列表类型
 				switch (column.getCategoryType()) {
@@ -205,6 +212,7 @@ public class GeneraterAction extends BaseAction {
 					CmsParserUtil.generateList(column, articleIdList.size());
 					break;
 				case "2":// 单页
+					//单页且无内容列表与之对应，则初始化一些内容在进行静态话
 					if(articleIdList.size()==0){
 						CategoryBean columnArticleIdBean=new CategoryBean();
 						CopyOptions copyOptions=CopyOptions.create();

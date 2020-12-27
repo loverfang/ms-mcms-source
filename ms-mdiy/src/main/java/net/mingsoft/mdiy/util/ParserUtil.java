@@ -287,29 +287,35 @@ public class ParserUtil {
      */
     public static String read(String templatePath, Map map, PageBean pageBean, AttributeBean attributeBean)
             throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException {
+
         String buildTempletPath = ParserUtil.buildTempletPath();
         if (ftl == null || !buildTempletPath.equals(ftl.baseDir.getPath())) {
             stringLoader = new StringTemplateLoader();
             ftl = new FileTemplateLoader(new File(buildTempletPath));
             MultiTemplateLoader multiTemplateLoader = new MultiTemplateLoader(new TemplateLoader[]{stringLoader,ftl});
-            cfg.setNumberFormat("#");
+            cfg.setNumberFormat("#"); //防止页面输出数字,变成2,000
             cfg.setTemplateLoader(multiTemplateLoader);
+            // 设置兼容模式
+            cfg.setClassicCompatible(true);
         }
+
+
         // 读取模板文件
         String temp =FileUtil.readString(FileUtil.file(buildTempletPath,templatePath),"utf-8");
-        //替换标签
+        // 替换标签
+        // 将原来＃include标签替换成自定义标签<@ms_includeEx 的形式
+        // 将模型中{ms:xx:xx}标签替换成${开头的标签　如:原来是{ms:global.host/}替换后变成:${global.host}
         temp = regReplace(temp);
-        //添加自定义模板
+        // 将替换过后的文件字符串转换成,模板引擎能用的模板
         stringLoader.putTemplate("ms:custom:"+templatePath,temp);
-        //获取自定义模板
+        // 获取自定义模板
         Template template = cfg.getTemplate("ms:custom:"+templatePath, Const.UTF8);
-        //设置兼容模式
-        cfg.setClassicCompatible(true);
+
+        // 将include标签解析后对内容作为共享变量放入模板引擎中
         cfg.setSharedVariable(TAG_PREFIX+"includeEx", new IncludeExTag(buildTempletPath,stringLoader));
 
         ITagSqlBiz tagSqlBiz = SpringUtil.getBean(ITagSqlBiz.class);
         List<TagSqlBean> list = tagSqlBiz.queryAll();
-
         list.forEach(x -> {
             //添加自定义标签
             if (StrUtil.isNotBlank(x.getTagName())) {
@@ -318,9 +324,10 @@ public class ParserUtil {
                 if (typeEnum == TagTypeEnum.LIST) {
                     cfg.setSharedVariable(TAG_PREFIX+x.getTagName(), new CustomTag(map, x));
                 }
+
                 //分页标签
                 if (typeEnum == TagTypeEnum.PAGE) {
-                    cfg.setSharedVariable(TAG_PREFIX+x.getTagName(), new PageListTag(map, x,pageBean,attributeBean));
+                    cfg.setSharedVariable(TAG_PREFIX+x.getTagName(), new PageListTag(map, x, pageBean, attributeBean));
                 }//其他内容标签
                 else if(typeEnum==TagTypeEnum.SINGLE&&(!systemTag.contains(x.getTagName())
                         //文字内容需要id参数
@@ -330,9 +337,10 @@ public class ParserUtil {
                 )){
                     String sql = null;
                     try {
+                        //每个自定义标签有一套SQL模板，这个方法就是通过模板技术获得标签对应的可执行SQL语句
                         sql = rendering(map, x.getTagSql());
                         NamedParameterJdbcTemplate jdbc = SpringUtil.getBean(NamedParameterJdbcTemplate.class);
-                       List list1 = jdbc.queryForList(sql, CollUtil.newHashMap());
+                        List list1 = jdbc.queryForList(sql, CollUtil.newHashMap());
                         map.put(x.getTagName(), list1.get(0));
                     } catch (IOException e) {
 

@@ -1,6 +1,6 @@
 package net.mingsoft.basic.entity;
 
-public class SystemConfigEntity {
+public class SystemConfigEntity extends BaseEntity{
     /**
      * 参数名,不能为空
      */

@@ -40,6 +40,7 @@ import java.util.Map;
 /**
  * @Author: huise
  * @Description: 自定义标签
+ * @参考: https://www.cnblogs.com/zhangyadong/p/9681532.html
  * @Date: Create in 2020/06/23 9:16
  */
 
@@ -74,8 +75,21 @@ public class CustomTag implements TemplateDirectiveModel {
         this.tag = tag;
         this.variableName = variableName;
     }
+
+    /**
+     * @param environment 系统环境变量，通常用它来输出相关内容，如Writer out = env.getOut()。
+     * @param params　页面上自定义标签传过来的对象，其key=自定义标签的参数名，value值是TemplateModel类型。
+     * @param templateModels　循环变量:一个，可选。它给出了当前重复的次数，从1开始。
+     * @param templateDirectiveBody　body: 用于处理自定义标签中的内容
+     * @throws TemplateException　
+     * @throws IOException
+     */
     @Override
-    public void execute(Environment environment, Map params, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
+    public void execute(Environment environment,
+                        Map params,
+                        TemplateModel[] templateModels,
+                        TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
+
         HashMap<Object, Object> root = CollUtil.newHashMap();
         //历史变量
         //将外部传入的压入
@@ -91,13 +105,14 @@ public class CustomTag implements TemplateDirectiveModel {
                 }
             }
         });
+
         //压入了栏目则传入sql模板
         TemplateModel column = environment.getVariable(ParserUtil.COLUMN);
         if(column!=null){
             root.put(ParserUtil.COLUMN,build.unwrap(column));
         }
 
-        String sql = ParserUtil.rendering(root,tag.getTagSql());
+        String sql = ParserUtil.rendering(root, tag.getTagSql());
         NamedParameterJdbcTemplate jdbc = SpringUtil.getBean(NamedParameterJdbcTemplate.class);
         List _list = jdbc.queryForList(sql,CollUtil.newHashMap());
         TemplateModel oldVar = environment.getVariable(variableName);
@@ -128,7 +143,5 @@ public class CustomTag implements TemplateDirectiveModel {
             }
         });
     }
-
-
 
 }

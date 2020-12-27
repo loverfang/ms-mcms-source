@@ -41,7 +41,7 @@ public class CmsParserUtil extends ParserUtil {
 	private final static String FIELD="field";
 
 	/**
-	 * 指定模板，指定路径进行生成静态页面，会自定识别pc与移动端
+	 * 指定模板，指定路径进行生成静态页面，会自动识别pc与移动端
 	 *
 	 * @param templatePath
 	 *            模板路径
@@ -79,7 +79,6 @@ public class CmsParserUtil extends ParserUtil {
 
 			//获取列表页显示的文章数量
 			//获取总数
-
 			String columnListPath;
 			ModelEntity contentModel = null;
 			// 判断当前栏目是否有自定义模型
@@ -87,6 +86,7 @@ public class CmsParserUtil extends ParserUtil {
 				// 通过栏目模型编号获取自定义模型实体
 				contentModel = (ModelEntity) SpringUtil.getBean(ModelBizImpl.class).getEntity(Integer.parseInt(columnContentModelId));
 			}
+
 			int pageNo = 1;
 
 			//全局参数设置
@@ -97,20 +97,24 @@ public class CmsParserUtil extends ParserUtil {
 			parserParams.put(IS_DO, false);
 			parserParams.put(HTML, HTML);
 			parserParams.put(APP_ID, BasicUtil.getAppId());
+
 			if (contentModel!=null) {
 				// 将自定义模型编号设置为key值
 				parserParams.put(TABLE_NAME, contentModel.getModelTableName());
 			}
+
 			//如果单站点，就废弃站点地址
 			if(ParserUtil.IS_SINGLE) {
 				parserParams.put(ParserUtil.URL, BasicUtil.getUrl());
 			}
+
 			parserParams.put(ParserUtil.PAGE, page);
 			AttributeBean attributeBean = new AttributeBean();
 			ParserUtil.read(File.separator + column.getCategoryListUrl(),parserParams, page,attributeBean);
 
 			int totalPageSize = PageUtil.totalPage(articleIdTotal, page.getSize());
 			page.setTotal(totalPageSize);
+
 			//文章列表页没有写文章列表标签，总数为0
 			if (totalPageSize <= 0) {
 				// 数据库中第一页是从开始0*size
@@ -119,7 +123,6 @@ public class CmsParserUtil extends ParserUtil {
 				page.setPageNo(pageNo);
 				String read = ParserUtil.read(File.separator + column.getCategoryListUrl(), parserParams);
 				FileUtil.writeString(read, columnListPath, Const.UTF8);
-
 			} else {
 				// 遍历分页
 				for (int i = 0; i < totalPageSize; i++) {
@@ -160,9 +163,10 @@ public class CmsParserUtil extends ParserUtil {
 
 		Map<Object, Object> contentModelMap = new HashMap<Object, Object>();
 		ModelEntity contentModel = null;
+
 		// 记录已经生成了文章编号
 		List<Integer> generateIds = new ArrayList<>();
-		ExecutorService pool=SpringUtil.getBean(ExecutorService.class);
+		ExecutorService pool = SpringUtil.getBean(ExecutorService.class);
 		// 生成文章
 		for (int artId = 0; artId < articleIdList.size();) {
 			String writePath = null;
